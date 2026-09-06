@@ -3,7 +3,7 @@ import { Sparkles, Tag } from "lucide-react";
 import { motion } from "framer-motion";
 import { Upload, Heart, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
-import { Lightbox } from "../components/LightBox.jsx";
+import  Lightbox  from "../components/LightBox.jsx";
 import { UserSearch } from "lucide-react";
 import { Download } from "lucide-react";
 import { api } from "../api/axiosInstance.js";
