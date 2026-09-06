@@ -90,7 +90,7 @@ const Login = () => {
           </div>
 
           
-           <a href="http://localhost:5000/v1/auth/google"
+           <a href={`${import.meta.env.VITE_API_URL}/auth/google`}
             className="border border-gray-300 dark:border-gray-700 rounded-lg py-2 text-center font-medium text-black dark:text-white hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors"
           >
             Continue with Google

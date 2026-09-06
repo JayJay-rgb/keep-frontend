@@ -3,6 +3,7 @@ import { Sparkles, Tag } from "lucide-react";
 import { motion } from "framer-motion";
 import { Upload, Heart, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
+import { Lightbox } from "../components/LightBox.jsx";
 import { UserSearch } from "lucide-react";
 import { Download } from "lucide-react";
 import { api } from "../api/axiosInstance.js";
@@ -13,7 +14,7 @@ import { Link, useParams } from "react-router-dom";
 export const AlbumView = () => {
   const { albumId } = useParams();
   const fileInputRef = useRef(null);
-
+  const [selectedItem, setSelectedItem] = useState(null);
   const [album, setAlbum] = useState(null);
   const [media, setMedia] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -343,6 +344,7 @@ export const AlbumView = () => {
           ))}
         </div>
       )}
+      <Lightbox item={selectedItem} onClose={() => setSelectedItem(null)} />
     </div>
   );
 };
