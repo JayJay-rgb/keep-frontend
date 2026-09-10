@@ -21,10 +21,11 @@ const Signup = () => {
       await signup(username, email, password);
       await login(email, password);
       toast.success("Account created!");
-      navigate("/");
       setEmail("");
       setPassword("");
       setUsername("");
+      navigate("/");
+
     } catch (error) {
       const message = error.response?.data?.message || "Something went wrong";
       setErrorMessage(message);
@@ -58,6 +59,7 @@ const Signup = () => {
                 type="text"
                 className="border border-gray-300 dark:border-gray-700 bg-transparent text-black dark:text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
                 value={username}
+                autoComplete="off"
                 onChange={(e) => setUsername(e.target.value)}
               />
             </div>
@@ -68,6 +70,7 @@ const Signup = () => {
               </label>
               <input
                 type="email"
+                autoComplete="off"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="border border-gray-300 dark:border-gray-700 bg-transparent text-black dark:text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
@@ -81,6 +84,7 @@ const Signup = () => {
               <input
                 type="password"
                 value={password}
+                autoComplete="new-password"
                 onChange={(e) => setPassword(e.target.value)}
                 className="border border-gray-300 dark:border-gray-700 bg-transparent text-black dark:text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
               />

@@ -35,8 +35,8 @@ const EmotionAwards = ({ groupId }) => {
   return (
     <div className="mb-8">
       <h2 className="text-lg font-semibold text-black dark:text-white mb-3">
-        This Week's Awards 🏅
-      </h2>
+  Today's Awards 🏅
+</h2>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {validAwards.map(([key, data]) => (
           <motion.div

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
@@ -12,20 +12,35 @@ const Login = () => {
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
 
+
+  useEffect(() => {
+    setEmail("");
+    setPassword("");
+  }, []);
+
+
+
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setErrorMessage("");
 
+
+
     try {
       await login(email, password);
-      toast.success("Welcome back!");
-      navigate("/");
+
       setEmail("");
       setPassword("");
+
+      navigate("/");
+      toast.success("Welcome back!");
     } catch (error) {
       const message = error.response?.data?.message || "Login failed";
       setErrorMessage(message);
+      setEmail(" ");
+      setPassword(" ");
       toast.error(message);
     } finally {
       setLoading(false);
@@ -57,6 +72,7 @@ const Login = () => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                autoComplete="off"
                 className="border border-gray-300 dark:border-gray-700 bg-transparent text-black dark:text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
@@ -69,6 +85,7 @@ const Login = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password"
                 className="border border-gray-300 dark:border-gray-700 bg-transparent text-black dark:text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
@@ -89,8 +106,8 @@ const Login = () => {
             <div className="flex-1 h-px bg-gray-300 dark:bg-gray-700" />
           </div>
 
-          
-           <a href={`${import.meta.env.VITE_API_URL}/auth/google`}
+          <a
+            href={`${import.meta.env.VITE_API_URL}/auth/google`}
             className="border border-gray-300 dark:border-gray-700 rounded-lg py-2 text-center font-medium text-black dark:text-white hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors"
           >
             Continue with Google
