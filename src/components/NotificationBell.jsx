@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Bell } from "lucide-react";
+import { X } from "lucide-react";
 import { api } from "../api/axiosInstance.js";
 import { SocketContext } from "../context/SocketContext";
 
@@ -59,6 +60,15 @@ const NotificationBell = () => {
       console.error("Failed to mark as read:", error);
     }
   };
+  const handleDelete = async (e, notificationId) => {
+    e.stopPropagation();
+    try {
+      await api.delete(`/notifications/${notificationId}`);
+      setNotifications((prev) => prev.filter((n) => n._id !== notificationId));
+    } catch (error) {
+      console.error("Failed to delete notification:", error);
+    }
+  };
 
   const unreadCount = notifications.filter((n) => !n.isRead).length;
 
@@ -114,16 +124,25 @@ const NotificationBell = () => {
                   onClick={() =>
                     !notification.isRead && handleMarkAsRead(notification._id)
                   }
-                  className={`p-3 border-b border-gray-100 dark:border-gray-800 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors ${
+                  className={`p-3 border-b border-gray-100 dark:border-gray-800 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-start justify-between gap-2 ${
                     !notification.isRead ? "bg-blue-50 dark:bg-blue-950/30" : ""
                   }`}
                 >
-                  <p className="text-sm text-black dark:text-white">
-                    {notification.message}
-                  </p>
-                  <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
-                    {formatTime(notification.createdAt)}
-                  </p>
+                  <div>
+                    <p className="text-sm text-black dark:text-white">
+                      {notification.message}
+                    </p>
+                    <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
+                      {formatTime(notification.createdAt)}
+                    </p>
+                  </div>
+                  <button
+                    onClick={(e) => handleDelete(e, notification._id)}
+                    className="text-gray-300 hover:text-red-500 transition-colors flex-shrink-0"
+                    aria-label="Dismiss notification"
+                  >
+                    <X size={14} />
+                  </button>
                 </div>
               ))
             )}
